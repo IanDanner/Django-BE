@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>List Quotes</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #wrapper{
+            margin: 20px auto;
+            width: 950px;
+            padding: 20px;
+            background: linear-gradient(rgb(91, 163, 57),rgb(226, 225, 225));
+        }
+        .quotable_quotes, .new_liked{
+            display: inline-block;
+            width: 459px;
+            margin-top: 10px;
+            vertical-align: top;
+        }
+        .quotable_quotes{
+            height: 500px;
+            margin-right: 20px;
+            border: 2px solid black;
+            overflow: auto;
+        }
+        .liked_quotes{
+            height: 250px;
+            border: 2px solid black;
+            vertical-align: top;
+            overflow: auto;            
+        }
+        .new_quote{
+            text-align: right;
+        }
+        .links{
+            text-align: right;
+        }
+        h1{
+            margin: 10px 0px;
+        }
+        h2{
+            margin: 5px;
+        }
+        .quote{
+            margin: 20px;
+        }
+        .quote form{
+            display: inline-block;
+            margin-left: 280px;
+        }
+        .btn{
+            padding: 1px 5px;
+        }
+        textarea{
+            resize: none;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <h3 class="links"><a href="/">Logout</a></h3>        
+        <h1>Welcome, {{user.first_name}}!</h1>
+        <div class="quotable_quotes">
+            <h2>Quotable Quotes:</h2>
+            {% for quote in quotes %}
+                <div class="quote">
+                    <h4>{{quote.quoted_by}}: {{quote.message}}</h4>
+                    <p><i>Posted by: <a href="/view_user/{{quote.contributer.id}}">{{quote.contributer.first_name}}</a></i></p>
+                    <form action="/add_like/{{quote.id}}">
+                        {% csrf_token %}
+                        <input class="btn" type="submit" value="Add to My List">
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="new_liked">
+            <div class="liked_quotes">
+                <h2>Your Favorites:</h2>
+                {% for quote in favorites %}
+                    <div class="quote">
+                        <h4>{{quote.quoted_by}}: {{quote.message}}</h4>
+                        <p><i>Posted by: <a href="/view_user/{{quote.contributer.id}}">{{quote.contributer.first_name}}</a></i></p>
+                        <form action="/remove_like/{{quote.id}}">
+                            {% csrf_token %}
+                            <input class="btn" type="submit" value="Remove From My List">
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="new_quote">
+                {% if messages %}
+                    {% for message in messages %}
+                        <p style='color:red;'>{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+                <h2>Contribute a Quote</h2>
+                <form action="/new_quote" method="POST">
+                    {% csrf_token %}
+                    <p>Quoted By: <input type="text" name="quoted_by"></p>
+                    <p>Message: <textarea name="message" cols="30" rows="5"></textarea></p>
+                    <input class="btn" type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

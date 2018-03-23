@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login and Reg Home</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #wrapper{
+            margin: 20px auto;
+            width: 970px;
+            padding: 10px;
+            background: linear-gradient(rgb(91, 163, 57),rgb(226, 225, 225));
+            text-align: right;
+        }
+        .register, .login{
+            display: inline-block;
+            width: 270px;
+            height: 400px;
+            line-height: 30px;
+            margin-right: 150px;
+            margin-top: 40px;
+        }
+        h1{
+            margin: 10px 0px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="register">
+            <h1>Registration</h1>
+            <form action="/register" method="post">
+                {% csrf_token %}
+                First Name: <input type="text" name="first_name">
+                Last Name: <input type="text" name="last_name">
+                Email: <input type="text" name="email">
+                Password: <input type="password" name="password">
+                <p>*Password should be at least 8 characters</p>
+                Confirm pw: <input type="password" name="confirm_pw">
+                Date of Birth: <input type="date" name="bday" max="2010-01-01">
+                <input type="submit" value="Register">
+            </form>
+        </div>
+        <div class="login">
+            {% if messages %}
+                {% for message in messages %}
+                    <p style='color:red;'>{{message}}</p>
+                {% endfor %}
+            {% endif %}
+            <h1>Login</h1>
+            <form action="/login" method="post">
+                {% csrf_token %}
+                Email: <input type="text" name="email">
+                Password: <input type="password" name="password">
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </div>    
+</body>
+</html>

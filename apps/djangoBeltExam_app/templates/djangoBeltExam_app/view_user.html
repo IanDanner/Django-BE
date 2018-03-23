@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>View User</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #wrapper{
+            margin: 20px auto;
+            width: 950px;
+            height: 600px;
+            padding: 20px;
+            background: linear-gradient(rgb(91, 163, 57),rgb(226, 225, 225));
+        }
+        .links{
+            text-align: right;
+        }
+        h1{
+            margin: 10px 0px;
+        }
+        .quote{
+            margin: 10px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <h3 class="links"><a href="/list_quotes">Dashboard</a> | <a href="/">Logout</a></h3>
+        <h1>Posts by {{user.first_name}}</h1>
+        <h3>Count: {{count}}</h3>
+        {% for quote in quotes %}
+            <div class="quote">
+                <h4><span style="color:red">{{quote.quoted_by}}</span>: {{quote.message}}</h4>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
